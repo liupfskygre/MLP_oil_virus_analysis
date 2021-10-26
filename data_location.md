@@ -11,7 +11,8 @@ LZU_ptpe2
 
 ## common_files
 ```
-/home/PTPE2/User/liupf/Projects_liupf/common_files/
+/home/PTPE2/User/liupf/Projects_liupf/common_files/TruSeq3-PE.fa
+
 
 ```
 
@@ -29,9 +30,15 @@ do
 echo ${file}
 ls -1 $PWD/"${file}"/*.gz
 done
+```
+############ ############ ############ metagenome trimmed reads
+```
+/home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/trimmed_reads
 
+```
 
 ############ ############ ############ contigs
+```
 /Users/pengfeiliu/Biogas_institute/Projects_on_going/MLP厌氧培养体系病毒组
 
 for file in $(ls -1)
@@ -42,6 +49,18 @@ done
 ```
 
 
+############ ############ ############ metatranscriptomic clean reads (not trimmed)
+```
+
+
+
+```
+
+############ ############ ############ metatranscriptomic trimmed reads
+```
+
+
+```
 
 ##work dir
 ```
