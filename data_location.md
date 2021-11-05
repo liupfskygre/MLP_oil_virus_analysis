@@ -51,13 +51,20 @@ done
 
 ############ ############ ############ metatranscriptomic clean reads (not trimmed)
 ```
+for file in $(ls -1)
+do
+echo ${file}
+ls -1 $PWD/"${file}"/*.gz
+done
 
-
+##all are done with sortmeRNA，only mRNA transcirpts left；
+## most rbisome RNA are remove during lib constructioin, sortmeRNA additonally remove 1.5% ribsome rRNA left
 
 ```
 
 ############ ############ ############ metatranscriptomic trimmed reads
 ```
+#
 
 
 ```
@@ -71,7 +78,11 @@ mkdir trimmed_reads
 
 /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/trimmed_reads
 
-#
+zcat /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/trimmed_reads/HX_O_T45_r1_trimmed_R1.fastq.gz /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/trimmed_reads/HX_O_T45_r2_trimmed_R1.fastq.gz > HX_O_T45_r2_trimmed_CatR1.fastq.gz
 
+zcat /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/trimmed_reads/HX_O_T45_r1_trimmed_R2.fastq.gz /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/trimmed_reads/HX_O_T45_r2_trimmed_R2.fastq.gz > HX_O_T45_r2_trimmed_CatR2.fastq.gz
+
+#metaT_trim_reads
+/home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/metaT_trim_reads
 
 ```
