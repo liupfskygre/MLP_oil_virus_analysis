@@ -34,6 +34,7 @@ screen -r trimming_reads
 # scaffolds.fasta  FASTA   DNA    256,135  229,401,608      128    895.6  1,658,739  323  425  679        0  1,422       0       0
 
 
+
 #test1, with different kmers
 /home/PTPE2/Software/SPAdes-3.15.3-Linux/bin/spades.py --meta  -1 HX_Cm_T55_G6_trimmed_R1.fastq.gz -2 HX_Cm_T55_G6_trimmed_R2.fastq.gz -o ./HX_Cm_T55_G6_spades-2 --only-assembler -t 60 -k 21,33,55,77 -m 800 &>HX_Cm_T55_G6_spades-2.log
 #file             format  type  num_seqs      sum_len  min_len  avg_len    max_len   Q1   Q2   Q3  sum_gap    N50  Q20(%)  Q30(%)
@@ -44,9 +45,15 @@ screen -r trimming_reads
 #test2, with megahit
 megahit -1 HX_Cm_T55_G6_trimmed_R1.fastq.gz -2 HX_Cm_T55_G6_trimmed_R2.fastq.gz  --k-min 41 --k-max 121 --k-step 10 --mem-flag 2 -m 0.75 --out-prefix HX_Cm_T55_G6_megahit -t 60 --out-dir ./HX_Cm_T55_G6_megahit &> HX_Cm_T55_G6_megahit.log
 
+stats.sh
+
+#keep using the data from test1, -k 21, 33, 55,77
+#10k data is similar, 25kb scaoffold is higher in test1 than test2
+#megahit is not good
+
 ```
 
-#trimm others
+#trimm other metaG data
 
 ```
 source /home/PTPE2/Software/miniconda3/bin/activate
@@ -61,6 +68,8 @@ nano /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/scripts/trim_for_loop_r
 
 ##trimming metaT reads
 ```
+#### most rbisome RNA are remove during lib constructioin, sortmeRNA additonally remove 1.5% ribsome rRNA left
+
 /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/scripts/trim_for_loop_run.sh trim_sample.tsv 4
 
 
