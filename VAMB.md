@@ -67,6 +67,28 @@ sh ./vamb_get_bins.sh sample_list_2.txt
 
 ```
 
+#mv all *.fasta together
+```
+for file in $(cat sample_list.txt)
+do
+echo "${file}"
+
+for MAGs in ./"${file}"_bbmap_binning/"${file}"_vamb/*.fasta
+do
+mv "${MAGs}" ./VAMB_MAGs/
+done
+done
+
+#seqkit get the genome size
+seqkit stats *.fasta
+
+
+#keep only MAGs with 1M and larger
+
+
+```
+
+
 
 ##scripts
 
