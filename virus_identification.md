@@ -161,6 +161,9 @@ for file in *_out
 do
 cat ./"${file}"/*.txt >> ../round2_dvf.txt
 done
+
+#25823
+
 cat round2_dvf.txt|grep -v 'name' |cut -f1 -d$'\t'|sort|uniq > round2_dvf_seq_finished.txt
 #25504
 
@@ -168,6 +171,19 @@ cat round2_dvf_seq_finished.txt round1_dvf_seq_finished.txt > round12_dvf_seq_fi
 seqkit grep -n -v -f round12_dvf_seq_finished.txt MLP_oil10kscaf.fasta -o MLP_oil10kscaf_round3.fasta
 
 nohup python /home/PTPE1/Software/DeepVirFinder/dvf.py -i MLP_oil10kscaf_round3.fasta -o MLP_oil10kscaf_round3_out -l 10000 -c 10 &
+
+#cat all round together
+#89150 total reads
+round_dvf.txt round2_dvf.txt
+
+# grep -c -v 'name' round12_dvf.txt
+89143
+
+cat round12_dvf.txt MLP_oil10kscaf_round3_out/MLP_oil10kscaf_round3.fasta_gt10000bp_dvfpred.txt > MLP_oil10kscaf_dvf123.txt
+
+#89144
+
+
 ```
 
 #virfinder
@@ -189,4 +205,67 @@ awk '$4>0.9&&$5<0.05' virfinder-metaG10.txt |wc -l
 awk '$4>0.7&&$5<0.05' virfinder-metaG10.txt |wc -l
 #892
 virfinder-metaG10.txt
+```
+
+
+##merge and filtering all results
+```
+cd /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/scaffolds10k
+
+mkdir virus_calling_out
+#1 virsorter2
+cp MLP_oil10kscaf.out/final-viral-score.tsv virus_calling_out/
+
+cat final-viral-score.tsv |grep -v 'seqname' >  MLP_VS2_viral_score_seqname.tsv
+sed -i -e 's/||.*$//g' MLP_VS2_viral_score_seqname.tsv
+#5870  MLP_VS2_viral_score_seqname.tsv
+
+
+
+#2 vibrant
+cp MLP_oil10kscaf.phages_combined.txt ../../virus_calling_out/
+#4075
+
+
+#3 virfinder
+mv virfinder-LP_oil10kscaf.txt virus_calling_out/
+awk '$4>=0.9&&$5<0.05' virfinder-LP_oil10kscaf.txt  > virfinder-LP_oil10kscaf_s9p5.txt
+wc -l  virfinder-LP_oil10kscaf_s9p5.txt
+#874 virfinder-LP_oil10kscaf_s9p5.txt
+
+cat virfinder-LP_oil10kscaf_s9p5.txt  |cut -d$'\t' -f2 > virfinder-MLP_oil10kscaf_s9p5_seqname.txt
+
+
+
+#4 deepvirfinder ==> score>=0.9, pvalue<0.05
+mv MLP_oil10kscaf_dvf123.txt virus_calling_out/
+
+awk '$3>=0.9&&$4<0.05' MLP_oil10kscaf_dvf123.txt> MLP_oil10kscaf_dvf123_s9p5.txt
+wc -l MLP_oil10kscaf_dvf123_s9p5.txt
+#3431 MLP_oil10kscaf_dvf123_s9p5.txt
+
+#awk '$3>=0.95&&$4<0.05' MLP_oil10kscaf_dvf123.txt> MLP_oil10kscaf_dvf123_s95p5.txt
+#2366 MLP_oil10kscaf_dvf123_s95p5.txt
+
+cat MLP_oil10kscaf_dvf123_s9p5.txt |cut -d$'\t' -f1 > MLP_oil10kscaf_dvf123_s9p5_seqname.txt
+
+
+cat MLP_VS2_viral_score_seqname.tsv MLP_oil10kscaf.phages_combined.txt virfinder-MLP_oil10kscaf_s9p5_seqname.txt MLP_oil10kscaf_dvf123_s9p5_seqname.txt > MLP_all4pipeline_virus_can_seqname.txt
+#14250
+
+
+cat MLP_all4pipeline_virus_can_seqname.txt |sort|uniq > MLP_all4pipeline_virus_can_seqname_uniq.txt
+## ### 7693 MLP_all4pipeline_virus_can_seqname_uniq.txt
+
+
+conda activate seqkit
+seqkit grep -n -f MLP_all4pipeline_virus_can_seqname_uniq.txt ../MLP_oil10kscaf.fasta -o MLP_oil10kscaf_virus_can.fasta
+
+seqkit stats MLP_oil10kscaf_virus_can.fasta
+#file                            format  type  num_seqs      sum_len  min_len   avg_len    max_len
+#MLP_oil10kscaf_virus_can.fasta  FASTA   DNA      7,420  272,970,992   10,001  36,788.5  2,368,885
+
+#checkV
+
+
 ```
