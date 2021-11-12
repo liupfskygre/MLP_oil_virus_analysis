@@ -69,22 +69,53 @@ sh ./vamb_get_bins.sh sample_list_2.txt
 
 #mv all *.fasta together
 ```
+cd /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/trimmed_reads/VAMB_MAGs
+
+
 for file in $(cat sample_list.txt)
 do
 echo "${file}"
 
-for MAGs in ./"${file}"_bbmap_binning/"${file}"_vamb/*.fasta
-do
-mv "${MAGs}" ./VAMB_MAGs/
-done
+#for MAGs in ./"${file}"_bbmap_binning/"${file}"_vamb/*.fasta
+#do
+#mv "${MAGs}" ./VAMB_MAGs/
+#done
+
+ls ./"${file}"_bbmap_binning/"${file}"_vamb/*.fasta
+ls ./"${file}"_bbmap_binning/"${file}"_vamb/*
+
 done
 
 #seqkit get the genome size
-seqkit stats *.fasta
+for file in *fasta
+do
+seqkit stats -j 20 -a ./"${file}" >> VAMB_MAGs_stats.txt
+done
+
+find -type f -name '*.fasta'  | wc -l
+
+#keep only MAGs with 0.5Mb and larger
+
+grep -v 'format' VAMB_MAGs_stats.txt >VAMB_MAGs_stats_noheader.txt
 
 
-#keep only MAGs with 1M and larger
+sed -e 's/,//g' VAMB_MAGs_stats_noheader.txt >VAMB_MAGs_stats_noheaderFx.txt
 
+awk '$5>=1000000' VAMB_MAGs_stats_noheaderFx.txt >VAMB_MAGs_stats_noheader1M.txt
+awk '$5>=500000' VAMB_MAGs_stats_noheaderFx.txt >VAMB_MAGs_stats_noheader05M.txt
+
+#1443 VAMB_MAGs_stats_noheader1M.txt
+#1809 VAMB_MAGs_stats_noheader05M.txt
+
+cut -f1 -d$' ' VAMB_MAGs_stats_noheader05M.txt > VAMB_MAGs_stats_noheader05M_name.txt
+
+sudo sed -i e 's/^\.//g' VAMB_MAGs_stats_noheader05M_name.txt
+
+for file in $(cat VAMB_MAGs_stats_noheader05M_name.txt)
+do
+echo "${file}"
+mv "${file}" /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/MLP_All_raw_MAGs/
+done
 
 ```
 
