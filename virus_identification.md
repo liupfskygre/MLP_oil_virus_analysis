@@ -257,15 +257,22 @@ cat MLP_VS2_viral_score_seqname.tsv MLP_oil10kscaf.phages_combined.txt virfinder
 cat MLP_all4pipeline_virus_can_seqname.txt |sort|uniq > MLP_all4pipeline_virus_can_seqname_uniq.txt
 ## ### 7693 MLP_all4pipeline_virus_can_seqname_uniq.txt
 
+#_fragment_xx from vibrant
+
+ sed -e 's/_fragment_.*$//g' MLP_all4pipeline_virus_can_seqname_uniq.txt > MLP_all4pipeline_virus_can_seqname_fix.txt
+
+cat MLP_all4pipeline_virus_can_seqname_fix.txt| sort|uniq |wc -l
+# 7523 seqs ()
+
+##rerun following steps, 202111-16
 
 conda activate seqkit
-seqkit grep -n -f MLP_all4pipeline_virus_can_seqname_uniq.txt ../MLP_oil10kscaf.fasta -o MLP_oil10kscaf_virus_can.fasta
+seqkit grep -n -f MLP_all4pipeline_virus_can_seqname_fix.txt ../MLP_oil10kscaf.fasta -o MLP_oil10kscaf_virus_can.fasta
 
 seqkit stats MLP_oil10kscaf_virus_can.fasta
-#file                            format  type  num_seqs      sum_len  min_len   avg_len    max_len
-#MLP_oil10kscaf_virus_can.fasta  FASTA   DNA      7,420  272,970,992   10,001  36,788.5  2,368,885
 
-#checkV
+
+#run two times checkV next 
 
 
 ```
