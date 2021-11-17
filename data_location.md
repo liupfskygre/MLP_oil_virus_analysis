@@ -86,3 +86,19 @@ zcat /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/trimmed_reads/HX_O_T45_
 /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/metaT_trim_reads
 
 ```
+
+#dReped MAGs
+```
+PTPE2@user-PowerEdge-R740:~/Project/mlp_data_liupengfei/derep_MAGs$ pwd
+/home/PTPE2/Project/mlp_data_liupengfei/derep_MAGs
+
+```
+
+#####################################################PTPE3 #############################
+```
+# /home/PTPE3/User/liupf/liupf_projects_analysis/mlp_oil_virus
+
+
+
+
+```
