@@ -8,34 +8,51 @@ checkv end_to_end MLP_oil10kscaf_virus_can.fasta MLP_oil_checkv_out -t 30 -d /ho
 
 /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/scaffolds10k/virus_calling_out/MLP_oil_checkv_out
 
-###
+
+#统一病毒名称,再次跑checkv，避免一个contigs出现两个provirous带来的名称统一
+cat proviruses.fna viruses.fna > virus_tmp.fasta
+
+sed -i -e 's/ .*$//g' virus_tmp.fasta
+sed -i -e 's/_1$//g' virus_tmp.fasta #
+
+#rerun checkV
+#
+checkv end_to_end virus_tmp.fasta virus_tmp_checkv_output_directory -t 30 -d /home/dell/biodb/checkv-db-v1.0
+
+
+
 #discarded list
+
+##keep blank derived vOTUs to remove see what are they and remove contaminations
+
+#
+grep -e 'blank' quality_summary.tsv > quality_summary1_blank.tsv
+#1167 blanks
+
 #among them, xxx are with 0 virus genes and with >=1 host genes,
 ##these need to be discardeded number
 #virus gene==0 and host gene>=1
 awk '$6==0&&$7>0' quality_summary.tsv |wc -l
-#2591
+#1359
 
-awk '$6==0&&$7>0' quality_summary.tsv | cut -f1 -d$'\t' > MLP_virus_discarded_seq.txt
-
-cat proviruses.fna viruses.fna > virus_tmp.fasta
-#7424
-
-sed -i -e 's/ .*$//g' virus_tmp.fasta
-sed -i -e 's/_1$//g' virus_tmp.fasta
+awk '$6==0&&$7>0' quality_summary.tsv | cut -f1 -d$'\t' > EV_virus_discarded_seq.txt
+#1359
 
 #kept
-seqkit grep -n -v -f MLP_virus_discarded_seq.txt   virus_tmp.fasta -o MLP_total_virus_final1.fasta
-#
-/home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/scaffolds10k/virus_calling_out/MLP_oil_checkv_out/MLP_total_virus_final1.fasta
-#4833
+seqkit grep -n -v -f EV_virus_discarded_seq.txt  ../virus_tmp.fasta -o EV_virus_final.fasta
 
-grep '>' MLP_total_virus_final1.fasta > MLP_total_virus_final1_seq.txt
-sed -i -e 's/>//g' MLP_total_virus_final1_seq.txt
+seqkit stats EV_virus_final.fasta
 
-grep -w -f MLP_total_virus_final1_seq.txt quality_summary.tsv  > MLP_total_virus_final1_quality_summary.tsv
-head -1 quality_summary.tsv > header_quality_summary.txt
-cat header_quality_summary.txt MLP_total_virus_final1_quality_summary.tsv > MLP_total_virus_final1_quality_summaryH.tsv
+file                  format  type  num_seqs      sum_len  min_len   avg_len    max_len
+EV_virus_final.fasta  FASTA   DNA      4,282  169,214,163    1,257  39,517.6  1,298,124
+
+#remove sequence w lenght <5000 bp after trimming
+
+#before xxx
+
+cat EV_virus_final.fasta | seqkit seq -m 5000 -g | seqkit stats
+# 4243 sequences
+
 
 #not used
 #keep completeness larger than 10%， most of undetermined removed
