@@ -50,6 +50,7 @@ awk '$5>=500000' dReped499_stats.txt|wc -l
 
 rename 's/\.fa$/\.fasta/' *.fa
 
+#7160 MAGs
 ```
 
 
@@ -87,8 +88,11 @@ gtdbtk classify_wf -x fasta --prefix mlp_all_bins --genome_dir ./ --out_dir gtdb
 
 
 ##合并表格
-cd
-python3 /mnt/nfs/metaG_trimmed_reads_AMC/depth_based_coassemlby/add_gtdbtk_tax_to_checkm.py depth_based_mtb2_checkm_summary.txt gtdbtk_out/depth_based_mtb2.bac120.summary.tsv gtdbtk_out/depth_based_mtb2.ar122.summary.tsv > ../depth_based_mtb2_checkm_gtdbtk_summary.txt
+cd /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/MLP_All_raw_MAGs
+python3 /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/scripts/add_gtdbtk_tax_to_checkm.py mlp_all_bins_checkm_summary.txt gtdbtk_out/mlp_all_bins.bac120.summary.tsv gtdbtk_out/mlp_all_bins.ar122.summary.tsv > ../mlp_all_bins._checkm_gtdbtk_summary.txt
+
+cd /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/
+
 ```
 
 
