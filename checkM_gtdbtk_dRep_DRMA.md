@@ -161,6 +161,14 @@ screen -S dRep_mlp
 dRep dereplicate -sa 0.97 -p 40 -comp 50 -con 10 --genomeInfo ../checkm_result_f_drep.txt dRep_mlp_MAGs -g ./*.fasta
 
 #622 genomes left
+##20220615 backup data
+mlp_dereplicated_AMGS_622.list
+
+for file in $(cat mlp_dereplicated_AMGS_622.list)
+do
+mv "${file}" /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/dRep_oil_MAGs/
+done
+
 ```
 
 #annotations by DRAM
