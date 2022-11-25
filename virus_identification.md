@@ -3,8 +3,6 @@
 #rename
 ```
 sudo mv HX_Cm_T55_G6_scaffolds.fasta /home/PTPE2/Project/mlp_data_liupengfei/metaG/HX_Cm_T55_G6/
-
-
 sudo mv /home/PTPE2/Project/mlp_data_liupengfei/metaG/GD/GD2_scaffold.fasta	/home/PTPE2/Project/mlp_data_liupengfei/metaG/GD/GDScaf.fasta
 sudo mv /home/PTPE2/Project/mlp_data_liupengfei/metaG/GD_Cm_T35_P1/G35_1_scaffold.fasta	/home/PTPE2/Project/mlp_data_liupengfei/metaG/GD_Cm_T35_P1/GDCmT35P1Scaf.fasta
 sudo mv /home/PTPE2/Project/mlp_data_liupengfei/metaG/GD_Cm_T35_P2/G35_2_scaffold.fasta	/home/PTPE2/Project/mlp_data_liupengfei/metaG/GD_Cm_T35_P2/GDCmT35P2Scaf.fasta
@@ -272,7 +270,15 @@ seqkit grep -n -f MLP_all4pipeline_virus_can_seqname_fix.txt ../MLP_oil10kscaf.f
 seqkit stats MLP_oil10kscaf_virus_can.fasta
 
 
-#run two times checkV next 
+#run two times checkV next
 
+
+```
+
+##10k
+#by sq
+```
+#
+/data01nfs/user/huangxy/liupf_PTPE1/Projects_liupf/mlp_oil_virus_project/MLP_oil10kscaf_genomad_out
 
 ```
