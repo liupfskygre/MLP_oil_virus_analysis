@@ -51,6 +51,7 @@ echo "abundance file exists"
 
 else
 echo "abundance file  not found"
+
 for line in *.bam
 do
 /home/PTPE2/Software/bbmap/pileup.sh in="${line}"  out="${line%.*}"_cov.txt #
