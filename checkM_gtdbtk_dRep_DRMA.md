@@ -166,6 +166,7 @@ mlp_dereplicated_AMGS_622.list
 
 for file in $(cat mlp_dereplicated_AMGS_622.list)
 do
+echo "${file}"
 mv "${file}" /home/PTPE2/User/liupf/Projects_liupf/mlp_oil_virus/dRep_oil_MAGs/
 done
 
